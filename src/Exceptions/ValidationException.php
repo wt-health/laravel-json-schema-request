@@ -1,9 +1,11 @@
 <?php
 
-namespace Webtools\JsonSchemaRequest\Exceptions;
+declare(strict_types=1);
+
+namespace Wthealth\JsonSchemaRequest\Exceptions;
 
 use Illuminate\Http\Response;
-use Webtools\JsonSchemaRequest\Validation\JsonSchemaValidator;
+use Wthealth\JsonSchemaRequest\Validation\JsonSchemaValidator;
 
 class ValidationException extends \Exception
 {

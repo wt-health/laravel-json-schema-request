@@ -1,9 +1,11 @@
 <?php
 
-namespace Webtools\JsonSchemaRequest\Tests;
+declare(strict_types=1);
+
+namespace Wthealth\JsonSchemaRequest\Tests;
 
 use Orchestra\Testbench\TestCase;
-use Webtools\JsonSchemaRequest\JsonSchemaRequestServiceProvider;
+use Wthealth\JsonSchemaRequest\JsonSchemaRequestServiceProvider;
 
 class MakeJsonSchemaRequestTest extends TestCase
 {
@@ -12,10 +14,7 @@ class MakeJsonSchemaRequestTest extends TestCase
         return [JsonSchemaRequestServiceProvider::class];
     }
 
-    /**
-     * @test
-     */
-    public function it_should_create_a_request_class()
+    public function test_it_should_create_a_request_class()
     {
         $this->artisan('make:json-request', ['name' => 'MySchemaRequest'])->assertExitCode(0);
     }

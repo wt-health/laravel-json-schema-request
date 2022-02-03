@@ -1,12 +1,14 @@
 <?php
 
-namespace Webtools\JsonSchemaRequest\Validation;
+declare(strict_types=1);
+
+namespace Wthealth\JsonSchemaRequest\Validation;
 
 use Illuminate\Contracts\Validation\Validator as ValidatorContract;
 use Illuminate\Support\MessageBag;
-use JsonSchema\Validator as SchemaValidator;
 use JsonSchema\Constraints\Constraint;
-use Webtools\JsonSchemaRequest\Exceptions\ValidationException;
+use JsonSchema\Validator as SchemaValidator;
+use Wthealth\JsonSchemaRequest\Exceptions\ValidationException;
 
 class JsonSchemaValidator implements ValidatorContract
 {
@@ -17,7 +19,7 @@ class JsonSchemaValidator implements ValidatorContract
     protected ?MessageBag $messages = null;
 
     /**
-     * Array of callbacks to be executed after validation
+     * Array of callbacks to be executed after validation.
      *
      * @var \Closure[]
      */
@@ -56,6 +58,7 @@ class JsonSchemaValidator implements ValidatorContract
 
     /**
      * @inheritDoc
+     *
      * @throws ValidationException
      */
     public function validate()
@@ -92,7 +95,8 @@ class JsonSchemaValidator implements ValidatorContract
     }
 
     /**
-     * Returns a list of the failed constraints for each property
+     * Returns a list of the failed constraints for each property.
+     *
      * @return array
      */
     public function failed()

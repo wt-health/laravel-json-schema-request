@@ -1,8 +1,10 @@
 <?php
 
-namespace Webtools\JsonSchemaRequest\Tests\Support;
+declare(strict_types=1);
 
-use Webtools\JsonSchemaRequest\JsonSchemaRequest;
+namespace Wthealth\JsonSchemaRequest\Tests\Support;
+
+use Wthealth\JsonSchemaRequest\JsonSchemaRequest;
 
 class ApiRequest extends JsonSchemaRequest
 {
@@ -13,7 +15,7 @@ class ApiRequest extends JsonSchemaRequest
             'properties' => [
                 'first_name' => ['type' => 'string'],
                 'last_name' => ['type' => 'string'],
-                'email' => ['type' => 'string', 'format' => 'email']
+                'email' => ['type' => 'string', 'format' => 'email'],
             ],
             'required' => ['first_name', 'last_name', 'email'],
             'additionalProperties' => false,

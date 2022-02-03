@@ -1,5 +1,5 @@
 {
-    "name": "webtoolsnz/laravel-json-schema-request",
+    "name": "wt-health/laravel-json-schema-request",
     "description": "Like FormRequests, but for validating against a json-schema",
     "keywords": [
         "webtools",
@@ -8,7 +8,7 @@
         "FormRequest",
         "validation"
     ],
-    "homepage": "https://github.com/webtoolsnz/laravel-json-schema-request",
+    "homepage": "https://github.com/wt-health/laravel-json-schema-request",
     "license": "MIT",
     "authors": [
         {
@@ -20,27 +20,34 @@
     ],
     "require-dev": {
         "orchestra/testbench": "^5.3",
-        "phpunit/phpunit": "^9.2"
+        "phpunit/phpunit": "^9.2",
+        "webtoolshealth/php-coding-standard": "^1.0"
     },
     "require": {
         "justinrainbow/json-schema": "^5.2",
-        "php": "^7.4",
-        "illuminate/support": "^7.0"
+        "php": "^7.4|^8.0",
+        "illuminate/support": "^7.0|^8.0"
     },
     "config": {
         "sort-packages": true
     },
     "autoload": {
         "psr-4": {
-            "Webtools\\JsonSchemaRequest\\": "src/",
-            "Webtools\\JsonSchemaRequest\\Tests\\": "tests/"
+            "Wthealth\\JsonSchemaRequest\\": "src/",
+            "Wthealth\\JsonSchemaRequest\\Tests\\": "tests/"
         }
     },
     "extra": {
         "laravel": {
             "providers": [
-                "Webtools\\JsonSchemaRequest\\JsonSchemaRequestServiceProvider"
+                "Wthealth\\JsonSchemaRequest\\JsonSchemaRequestServiceProvider"
             ]
         }
+    },
+    "scripts": {
+        "ecs": "vendor/bin/ecs check",
+        "ecs-fix": "vendor/bin/ecs check --fix",
+        "test": "vendor/bin/phpunit --colors=always",
+        "test-coverage": "vendor/bin/phpunit --coverage-html coverage"
     }
 }

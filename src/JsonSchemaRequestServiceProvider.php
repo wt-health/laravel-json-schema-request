@@ -1,9 +1,11 @@
 <?php
 
-namespace Webtools\JsonSchemaRequest;
+declare(strict_types=1);
+
+namespace Wthealth\JsonSchemaRequest;
 
 use Illuminate\Support\ServiceProvider as BaseServiceProvider;
-use Webtools\JsonSchemaRequest\Console\MakeJsonSchemaRequestCommand;
+use Wthealth\JsonSchemaRequest\Console\MakeJsonSchemaRequestCommand;
 
 class JsonSchemaRequestServiceProvider extends BaseServiceProvider
 {

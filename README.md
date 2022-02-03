@@ -1,8 +1,8 @@
 JSON Schema Request
 ================================
-[![CI Action](https://github.com/webtoolsnz/laravel-json-schema-request/workflows/continuous-integration/badge.svg)](https://github.com/webtoolsnz/laravel-json-schema-request/workflows/continuous-integration)
-[![Code Coverage](https://scrutinizer-ci.com/g/webtoolsnz/laravel-json-schema-request/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/webtoolsnz/laravel-json-schema-request/?branch=master)
-[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/webtoolsnz/laravel-json-schema-request/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/webtoolsnz/laravel-json-schema-request/?branch=master)
+[![CI Action](https://github.com/wt-health/laravel-json-schema-request/workflows/continuous-integration/badge.svg)](https://github.com/wt-health/laravel-json-schema-request/workflows/continuous-integration)
+[![Code Coverage](https://scrutinizer-ci.com/g/wt-health/laravel-json-schema-request/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/wt-health/laravel-json-schema-request/?branch=main)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/wt-health/laravel-json-schema-request/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/wt-health/laravel-json-schema-request/?branch=main)
 
 Laravels [Form Request Validation](https://laravel.com/docs/7.x/validation#form-request-validation) for JSON Schema documents  
  
@@ -10,7 +10,7 @@ Installation
 --------------
 
 ```bash
- composer require webtoolsnz/laravel-json-schema-request
+ composer require wt-health/laravel-json-schema-request
 ```
 
 Usage
@@ -30,7 +30,7 @@ You will now have new request class `App\Http\Requests\MyJsonRequest`, Below you
 
 namespace App\Http\Requests;
 
-use Webtools\JsonSchemaRequest\JsonSchemaRequest;
+use Wthealth\JsonSchemaRequest\JsonSchemaRequest;
 
 class MyJsonRequest extends JsonSchemaRequest
 {

@@ -2,7 +2,7 @@
 
 namespace DummyNamespace;
 
-use Webtools\JsonSchemaRequest\JsonSchemaRequest;
+use Wthealth\JsonSchemaRequest\JsonSchemaRequest;
 
 class DummyClass extends JsonSchemaRequest
 {
@@ -15,4 +15,4 @@ class DummyClass extends JsonSchemaRequest
             ]
         ];
     }
-}
+}``

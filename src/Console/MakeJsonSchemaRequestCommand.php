@@ -1,6 +1,8 @@
 <?php
 
-namespace Webtools\JsonSchemaRequest\Console;
+declare(strict_types=1);
+
+namespace Wthealth\JsonSchemaRequest\Console;
 
 use Illuminate\Console\GeneratorCommand;
 

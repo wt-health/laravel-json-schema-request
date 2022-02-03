@@ -1,11 +1,13 @@
 <?php
 
-namespace Webtools\JsonSchemaRequest\Tests;
+declare(strict_types=1);
 
-use Orchestra\Testbench\TestCase;
-use Webtools\JsonSchemaRequest\JsonSchemaRequestServiceProvider;
-use Webtools\JsonSchemaRequest\Tests\Support\ApiRequest;
+namespace Wthealth\JsonSchemaRequest\Tests;
+
 use Illuminate\Routing\Router;
+use Orchestra\Testbench\TestCase;
+use Wthealth\JsonSchemaRequest\JsonSchemaRequestServiceProvider;
+use Wthealth\JsonSchemaRequest\Tests\Support\ApiRequest;
 
 class JsonSchemaRequestTest extends TestCase
 {
@@ -14,13 +16,10 @@ class JsonSchemaRequestTest extends TestCase
         return [JsonSchemaRequestServiceProvider::class];
     }
 
-    /**
-     * @test
-     */
-    public function controllers_should_reject_invalid_json_resolve()
+    public function test_controllers_should_reject_invalid_json_resolve()
     {
         $router = $this->app->get(Router::class);
-        $router->post('/test', fn(ApiRequest $request) => response(200));
+        $router->post('/test', fn (ApiRequest $request) => response(200));
 
         $response = $this->postJson('/test', [
             'first_name' => 'foo',
@@ -31,18 +30,15 @@ class JsonSchemaRequestTest extends TestCase
             ->assertJson([
                 'errors' => [
                     'last_name' => ['The property last_name is required'],
-                    'email' => ['The property email is required']
-                ]
+                    'email' => ['The property email is required'],
+                ],
             ]);
     }
 
-    /**
-     * @test
-     */
-    public function it_should_accept_valid_json()
+    public function test_it_should_accept_valid_json()
     {
         $router = $this->app->get(Router::class);
-        $router->post('/test', fn(ApiRequest $request) => $request->validated());
+        $router->post('/test', fn (ApiRequest $request) => $request->validated());
 
         $data = [
             'first_name' => 'foo',

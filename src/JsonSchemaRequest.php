@@ -1,14 +1,16 @@
 <?php
 
-namespace Webtools\JsonSchemaRequest;
+declare(strict_types=1);
+
+namespace Wthealth\JsonSchemaRequest;
 
 use Illuminate\Contracts\Container\Container;
 use Illuminate\Contracts\Validation\ValidatesWhenResolved;
 use Illuminate\Contracts\Validation\Validator as ValidatorContract;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidatesWhenResolvedTrait;
-use Webtools\JsonSchemaRequest\Exceptions\ValidationException;
-use Webtools\JsonSchemaRequest\Validation\JsonSchemaValidator;
+use Wthealth\JsonSchemaRequest\Exceptions\ValidationException;
+use Wthealth\JsonSchemaRequest\Validation\JsonSchemaValidator;
 
 class JsonSchemaRequest extends Request implements ValidatesWhenResolved
 {

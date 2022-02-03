@@ -1,11 +1,13 @@
 <?php
 
-namespace Webtools\JsonSchemaRequest\Tests;
+declare(strict_types=1);
 
-use Webtools\JsonSchemaRequest\Exceptions\ValidationException;
-use Webtools\JsonSchemaRequest\Validation\JsonSchemaValidator;
+namespace Wthealth\JsonSchemaRequest\Tests;
+
 use JsonSchema\Validator;
 use PHPUnit\Framework\TestCase;
+use Wthealth\JsonSchemaRequest\Exceptions\ValidationException;
+use Wthealth\JsonSchemaRequest\Validation\JsonSchemaValidator;
 
 class JsonSchemaValidatorTest extends TestCase
 {
@@ -14,7 +16,7 @@ class JsonSchemaValidatorTest extends TestCase
         'properties' => [
             'first_name' => ['type' => 'string'],
             'last_name' => ['type' => 'string'],
-            'email' => ['type' => 'string', 'format' => 'email']
+            'email' => ['type' => 'string', 'format' => 'email'],
         ],
         'required' => ['first_name', 'last_name'],
         'additionalProperties' => false,
@@ -23,17 +25,14 @@ class JsonSchemaValidatorTest extends TestCase
     protected array $validPayload = [
         'first_name' => 'Joe',
         'last_name' => 'Bloggs',
-        'email' => 'foo@bar.com'
+        'email' => 'foo@bar.com',
     ];
 
-    /**
-     * @test
-     */
-    public function it_should_throw_a_http_exception_on_failure()
+    public function test_it_should_throw_a_http_exception_on_failure()
     {
         $validator = new JsonSchemaValidator(new Validator(), $this->schema, [
             'first_name' => 'Joe',
-            'email' => 'my-email'
+            'email' => 'my-email',
         ]);
 
         $exception = null;
@@ -47,20 +46,14 @@ class JsonSchemaValidatorTest extends TestCase
         $this->assertNotNull($exception);
     }
 
-    /**
-     * @test
-     */
-    public function it_should_accept_valid_data()
+    public function test_it_should_accept_valid_data()
     {
         $validator = new JsonSchemaValidator(new Validator(), $this->schema, $this->validPayload);
-        $this->assertEquals($this->validPayload, $validator->validate());
+        $this->assertSame($this->validPayload, $validator->validate());
         $this->assertEmpty($validator->errors());
     }
 
-    /**
-     * @test
-     */
-    public function it_supports_after_validation_hooks()
+    public function test_it_supports_after_validation_hooks()
     {
         $validator = new JsonSchemaValidator(new Validator(), $this->schema, $this->validPayload);
 
@@ -73,10 +66,7 @@ class JsonSchemaValidatorTest extends TestCase
         $this->assertTrue($called);
     }
 
-    /**
-     * @test
-     */
-    public function calling_validated_should_perform_validation_if_not_already_done()
+    public function test_calling_validated_should_perform_validation_if_not_already_done()
     {
         $validator = new JsonSchemaValidator(new Validator(), $this->schema, []);
 
@@ -84,16 +74,13 @@ class JsonSchemaValidatorTest extends TestCase
         $validator->validated();
     }
 
-    /**
-     * @test
-     */
-    public function somtimes_is_a_no_op()
+    public function test_somtimes_is_a_no_op()
     {
         $validator = new JsonSchemaValidator(new Validator(), $this->schema, $this->validPayload);
 
         $neverCalled = true;
 
-        $validator->sometimes('foo', 'bar', function () use(&$neverCalled) {
+        $validator->sometimes('foo', 'bar', function () use (&$neverCalled) {
             $neverCalled = false;
         });
 
@@ -101,10 +88,7 @@ class JsonSchemaValidatorTest extends TestCase
         $this->assertTrue($neverCalled);
     }
 
-    /**
-     * @test
-     */
-    public function it_should_return_a_list_of_failed_constraints()
+    public function test_it_should_return_a_list_of_failed_constraints()
     {
         $validator = new JsonSchemaValidator(new Validator(), $this->schema, [
             'first_name' => null,
@@ -115,15 +99,13 @@ class JsonSchemaValidatorTest extends TestCase
         try {
             $validator->validate();
         } catch (ValidationException $exception) {
-            //
         }
 
-        $this->assertEquals([
+        $this->assertSame([
             'first_name' => ['type'],
             'last_name' => ['required'],
             'email' => ['format'],
             '' => ['additionalProp'],
         ], $validator->failed());
-
     }
 }
