@@ -4,33 +4,26 @@ on:
     branches:
       - main
   pull_request:
-
 jobs:
-  codeception:
+  tests:
+    timeout-minutes: 15
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v3
       - name: Setup PHP
-        uses: shivammathur/setup-php@master
+        uses: shivammathur/setup-php@v2
         with:
           php-version: '8.0'
           extension-csv: mbstring,bcmath,curl,gettext,exif,intl
           ini-values-csv: pcov.directory=./src/
           coverage: pcov
-      - name: Composer Cache
-        uses: actions/cache@v1
-        with:
-          path: ~/.composer-cache
-          key: ${{ runner.OS }}-composer-cache
-      - name: Composer
-        run: |
-          composer config cache-files-dir ~/.composer-cache
-          composer install --no-progress --no-suggest --prefer-dist --optimize-autoloader
+      - name: Composer install
+        run: composer install --no-progress --no-suggest --prefer-dist --optimize-autoloader
+      - name: PHP Coding Standards
+        run: composer run ecs-check
       - name: PHPUnit
         run: ./vendor/bin/phpunit --coverage-clover=coverage.clover
-      - name: Download ocular reporter
-        run: curl -L https://scrutinizer-ci.com/ocular.phar > ./ocular.phar
       - name: Upload Coverage report
-        run: php ocular.phar code-coverage:upload --access-token="${SCRUTINIZER_ACCESS_TOKEN}" --format=php-clover ./coverage.clover
+        run: vendor/bin/ocular code-coverage:upload --access-token="${SCRUTINIZER_ACCESS_TOKEN}" --format=php-clover ./coverage.clover
         env:
           SCRUTINIZER_ACCESS_TOKEN: ${{ secrets.SCRUTINIZER_ACCESS_TOKEN }}

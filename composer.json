@@ -21,6 +21,7 @@
     "require-dev": {
         "orchestra/testbench": "^5.3",
         "phpunit/phpunit": "^9.2",
+        "scrutinizer/ocular": "^1.9",
         "webtoolshealth/php-coding-standard": "^1.0"
     },
     "require": {
