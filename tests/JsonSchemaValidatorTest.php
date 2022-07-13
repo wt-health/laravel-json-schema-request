@@ -102,8 +102,8 @@ class JsonSchemaValidatorTest extends TestCase
         }
 
         $this->assertSame([
-            'first_name' => ['type'],
             'last_name' => ['required'],
+            'first_name' => ['type'],
             'email' => ['format'],
             '' => ['additionalProp'],
         ], $validator->failed());
