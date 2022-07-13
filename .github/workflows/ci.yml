@@ -20,7 +20,7 @@ jobs:
       - name: Composer install
         run: composer install --no-progress --no-suggest --prefer-dist --optimize-autoloader
       - name: PHP Coding Standards
-        run: composer run ecs-check
+        run: composer run ecs
       - name: PHPUnit
         run: ./vendor/bin/phpunit --coverage-clover=coverage.clover
       - name: Upload Coverage report
