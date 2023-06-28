@@ -16,7 +16,7 @@ jobs:
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: ${{ matric.phpversion }}
+          php-version: ${{ matrix.phpversion }}
           extension-csv: mbstring,bcmath,curl,gettext,exif,intl
           ini-values-csv: pcov.directory=./src/
           coverage: pcov
