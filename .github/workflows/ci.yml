@@ -6,6 +6,9 @@ on:
   pull_request:
 jobs:
   tests:
+    strategy:
+      matrix:
+        phpversion: [ 8.0, 8.1, 8.2 ]
     timeout-minutes: 15
     runs-on: ubuntu-latest
     steps:
@@ -13,7 +16,7 @@ jobs:
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: '8.0'
+          php-version: ${{ matric.phpversion }}
           extension-csv: mbstring,bcmath,curl,gettext,exif,intl
           ini-values-csv: pcov.directory=./src/
           coverage: pcov

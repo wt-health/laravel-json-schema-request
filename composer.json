@@ -19,7 +19,7 @@
         }
     ],
     "require-dev": {
-        "orchestra/testbench": "^v8.5.9",
+        "orchestra/testbench": "^v7.25.0",
         "phpunit/phpunit": "^9.2",
         "scrutinizer/ocular": "^1.9",
         "webtoolshealth/php-coding-standard": "^1.0"
