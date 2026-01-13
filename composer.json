@@ -24,9 +24,9 @@
         "webtoolshealth/php-coding-standard": "^1.0"
     },
     "require": {
-        "justinrainbow/json-schema": "^5.2",
         "php": "^8.3|^8.4",
-        "illuminate/support": "^11.0|^12.0"
+        "illuminate/support": "^11.0|^12.0",
+        "justinrainbow/json-schema": "^6.5.1"
     },
     "config": {
         "sort-packages": true
