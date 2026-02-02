@@ -74,7 +74,7 @@ class JsonSchemaValidatorTest extends TestCase
         $validator->validated();
     }
 
-    public function test_somtimes_is_a_no_op()
+    public function test_sometimes_is_a_no_op()
     {
         $validator = new JsonSchemaValidator(new Validator(), $this->schema, $this->validPayload);
 
@@ -104,7 +104,7 @@ class JsonSchemaValidatorTest extends TestCase
         $this->assertSame([
             'last_name' => ['required'],
             'first_name' => ['type'],
-            'email' => ['format'],
+            'email' => ['emailFormat'],
             '' => ['additionalProp'],
         ], $validator->failed());
     }

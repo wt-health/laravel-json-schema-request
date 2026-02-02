@@ -41,7 +41,8 @@ class JsonSchemaValidator implements ValidatorContract
 
         foreach ($this->validator->getErrors(SchemaValidator::ERROR_DOCUMENT_VALIDATION) as $error) {
             $this->messages->add($error['property'], $error['message']);
-            $this->failedConstraints->add($error['property'], $error['constraint']);
+            $constraint = is_array($error['constraint']) ? $error['constraint']['name'] : $error['constraint'];
+            $this->failedConstraints->add($error['property'], $constraint);
         }
 
         foreach ($this->after as $after) {
