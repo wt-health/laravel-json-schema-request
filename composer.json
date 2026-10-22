@@ -19,13 +19,13 @@
         }
     ],
     "require-dev": {
-        "orchestra/testbench": "^v9.6.1|^10.0|^11.0",
+        "orchestra/testbench": "^10.0|^11.0",
         "phpunit/phpunit": "^11.4.0",
         "webtoolshealth/php-coding-standard": "^1.0"
     },
     "require": {
         "php": "^8.3|^8.4",
-        "illuminate/support": "^11.0|^12.0|^13.0",
+        "illuminate/support": "^12.0|^13.0",
         "justinrainbow/json-schema": "^6.5.1"
     },
     "config": {
