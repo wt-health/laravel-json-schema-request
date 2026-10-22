@@ -8,6 +8,7 @@ use Illuminate\Routing\Router;
 use Orchestra\Testbench\TestCase;
 use Wthealth\JsonSchemaRequest\JsonSchemaRequestServiceProvider;
 use Wthealth\JsonSchemaRequest\Tests\Support\ApiRequest;
+use Wthealth\JsonSchemaRequest\Tests\Support\CountingRequest;
 use Wthealth\JsonSchemaRequest\Tests\Support\HookedRequest;
 use Wthealth\JsonSchemaRequest\Tests\Support\InjectedSchemaRequest;
 use Wthealth\JsonSchemaRequest\Tests\Support\SchemaRepository;
@@ -57,19 +58,20 @@ class JsonSchemaRequestTest extends TestCase
     {
         $resolved = null;
         $router = $this->app->get(Router::class);
-        $router->post('/test', function (ApiRequest $request) use (&$resolved) {
+        $router->post('/test', function (CountingRequest $request) use (&$resolved) {
             $resolved = $request;
+            $request->getValidatorInstance();
 
-            return response()->noContent();
+            return $request->validated();
         });
 
         $this->postJson('/test', [
             'first_name' => 'foo',
             'last_name' => 'bar',
             'email' => 'foo@bar.com',
-        ])->assertNoContent();
+        ])->assertOk();
 
-        $this->assertSame($resolved->getValidatorInstance(), $resolved->getValidatorInstance());
+        $this->assertSame(1, $resolved->schemaCalls);
     }
 
     public function test_schema_dependencies_are_injected_from_the_container()

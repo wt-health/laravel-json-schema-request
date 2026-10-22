@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace Wthealth\JsonSchemaRequest\Tests;
 
 use Illuminate\Filesystem\Filesystem;
+use Illuminate\Support\Facades\Process;
 use Orchestra\Testbench\TestCase;
-use Wthealth\JsonSchemaRequest\JsonSchemaRequest;
 use Wthealth\JsonSchemaRequest\JsonSchemaRequestServiceProvider;
 
 class MakeJsonSchemaRequestTest extends TestCase
@@ -26,10 +26,13 @@ class MakeJsonSchemaRequestTest extends TestCase
         $this->artisan('make:json-request', ['name' => 'MySchemaRequest'])->assertExitCode(0);
 
         $this->assertFileExists($path);
-        $this->assertStringContainsString('namespace App\Http\Requests;', $files->get($path));
 
-        require $path;
+        $contents = $files->get($path);
+        $this->assertStringContainsString('namespace App\Http\Requests;', $contents);
+        $this->assertStringContainsString('use Wthealth\JsonSchemaRequest\JsonSchemaRequest;', $contents);
+        $this->assertStringContainsString('class MySchemaRequest extends JsonSchemaRequest', $contents);
 
-        $this->assertTrue(is_subclass_of('App\Http\Requests\MySchemaRequest', JsonSchemaRequest::class));
+        $lint = Process::run([PHP_BINARY, '-l', $path]);
+        $this->assertTrue($lint->successful(), $lint->output() . $lint->errorOutput());
     }
 }
