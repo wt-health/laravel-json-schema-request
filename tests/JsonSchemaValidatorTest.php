@@ -108,4 +108,59 @@ class JsonSchemaValidatorTest extends TestCase
             '' => ['additionalProp'],
         ], $validator->failed());
     }
+
+    public function test_it_should_key_nested_errors_by_property_path()
+    {
+        $schema = [
+            'type' => 'object',
+            'properties' => [
+                'address' => [
+                    'type' => 'object',
+                    'properties' => [
+                        'street' => ['type' => 'string'],
+                        'postcode' => ['type' => 'string'],
+                    ],
+                    'required' => ['street'],
+                ],
+                'tags' => [
+                    'type' => 'array',
+                    'items' => ['type' => 'string'],
+                ],
+                'contacts' => [
+                    'type' => 'array',
+                    'items' => [
+                        'type' => 'object',
+                        'properties' => [
+                            'email' => ['type' => 'string', 'format' => 'email'],
+                        ],
+                        'required' => ['email'],
+                    ],
+                ],
+            ],
+        ];
+
+        $validator = new JsonSchemaValidator(new Validator(), $schema, [
+            'address' => ['postcode' => 123],
+            'tags' => ['a', 2],
+            'contacts' => [['email' => 'foo@bar.com'], ['email' => 'foo'], []],
+        ]);
+
+        $this->assertTrue($validator->fails());
+
+        $this->assertSame([
+            'address.street' => ['The property street is required'],
+            'address.postcode' => ['Integer value found, but a string is required'],
+            'tags[1]' => ['Integer value found, but a string is required'],
+            'contacts[1].email' => ['Invalid email'],
+            'contacts[2].email' => ['The property email is required'],
+        ], $validator->errors()->toArray());
+
+        $this->assertSame([
+            'address.street' => ['required'],
+            'address.postcode' => ['type'],
+            'tags[1]' => ['type'],
+            'contacts[1].email' => ['emailFormat'],
+            'contacts[2].email' => ['required'],
+        ], $validator->failed());
+    }
 }

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Wthealth\JsonSchemaRequest;
 
+use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Contracts\Container\Container;
 use Illuminate\Contracts\Validation\ValidatesWhenResolved;
 use Illuminate\Contracts\Validation\Validator as ValidatorContract;
@@ -43,6 +44,11 @@ class JsonSchemaRequest extends Request implements ValidatesWhenResolved
     public function failedValidation(JsonSchemaValidator $validator)
     {
         throw new ValidationException($validator);
+    }
+
+    protected function failedAuthorization()
+    {
+        throw new AuthorizationException();
     }
 
     public function validated()
