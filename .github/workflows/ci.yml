@@ -6,13 +6,16 @@ on:
   pull_request:
 jobs:
   tests:
+    name: PHP ${{ matrix.phpversion }} - Laravel ${{ matrix.laravel }}
     strategy:
+      fail-fast: false
       matrix:
         phpversion: [ 8.3, 8.4 ]
+        laravel: [ 11, 12, 13 ]
     timeout-minutes: 15
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v4
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
@@ -21,12 +24,13 @@ jobs:
           ini-values-csv: pcov.directory=./src/
           coverage: pcov
       - name: Composer install
-        run: composer install --no-progress --no-suggest --prefer-dist --optimize-autoloader
+        run: composer update --no-progress --prefer-dist --optimize-autoloader --with "laravel/framework:^${{ matrix.laravel }}.0"
       - name: PHP Coding Standards
         run: composer run ecs
       - name: PHPUnit
         run: ./vendor/bin/phpunit --coverage-clover=coverage.clover
       - name: Upload coverage reports to Codecov
+        if: matrix.phpversion == '8.4' && matrix.laravel == 13
         uses: codecov/codecov-action@v4.6.0
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
